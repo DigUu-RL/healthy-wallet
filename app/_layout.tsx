@@ -1,37 +1,52 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
+// ** EXPO
 import { Stack } from 'expo-router';
+import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
+
+// ** REACT
 import { useEffect } from 'react';
+import { ThemeProvider } from '@react-navigation/native';
 import 'react-native-reanimated';
 
-import { useColorScheme } from '@/hooks/useColorScheme';
+// ** COMPONENTS
+import HealthyWalletProvider from '@/contexts';
+import { AuthGuard } from '@/guards/auth-guard';
+
+// ** TYPES
+import { HealthyWalletDarkTheme } from '@/constants/theme/dark';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
+SplashScreen.preventAutoHideAsync()
+  .then((value: boolean) => console.log(value))
+  .catch(error => console.error(error));
 
-export default function RootLayout() {
-  const colorScheme = useColorScheme();
+const RootLayout = () => {
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
 
   useEffect(() => {
     if (loaded) {
-      SplashScreen.hideAsync();
+      SplashScreen.hideAsync()
+        .then((value: boolean) => console.log(value))
+        .catch(error => console.error(error));
     }
   }, [loaded]);
 
-  if (!loaded) {
-    return null;
-  }
+  if (!loaded) return null;
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-    </ThemeProvider>
+    <HealthyWalletProvider>
+      <AuthGuard>
+        <ThemeProvider value={HealthyWalletDarkTheme}>
+          <Stack>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }}/>
+            <Stack.Screen name="+not-found"/>
+          </Stack>
+        </ThemeProvider>
+      </AuthGuard>
+    </HealthyWalletProvider>
   );
-}
+};
+
+export default RootLayout;
