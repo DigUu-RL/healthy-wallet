@@ -1,8 +1,10 @@
-// ** REACT
-import { Button, ButtonProps } from 'react-native';
+// ** COMPONENTS
+import HealthyWalletButton, {
+	IHealthyWalletButtonProps,
+} from '@/components/HealthyWalletButton';
 
-const CardAction = ({ ...rest }: ButtonProps) => {
-  return <Button {...rest}></Button>;
+const CardAction = ({ title, ...rest }: IHealthyWalletButtonProps) => {
+	return <HealthyWalletButton title={title} {...rest} />;
 };
 
 export default CardAction;
