@@ -1,21 +1,24 @@
 // ** REACT
-import { Pressable, PressableProps, StyleSheet } from 'react-native';
+import { Pressable, PressableProps } from 'react-native';
 
 // ** CONSTANTS
-import { Colors } from '@/constants/colors';
-
 // ** TYPES
-import { TColor, TVariant } from '@/types/contexts/colors';
+import { TColor, TSize, TVariant } from '@/types/colors';
 
 // ** COMPONENTS
 import HealthyWalletText from '@/components/HealthyWalletText';
+import {
+	size as sizeStyles,
+	styles,
+	variant as variantStyles,
+} from '@/styles/button';
 
 export interface IHealthyWalletButtonProps extends PressableProps {
 	title: string;
 	fullWidth?: boolean;
 	variant?: TVariant;
 	color?: TColor;
-	size?: 'small' | 'medium' | 'large';
+	size?: TSize;
 }
 
 const HealthyWalletButton = ({
@@ -26,98 +29,25 @@ const HealthyWalletButton = ({
 	size,
 	...rest
 }: IHealthyWalletButtonProps) => {
-	// * handles
-	const getButtonStyles = (
-		variant: TVariant | undefined,
-		color: TColor | undefined,
-	) => {
-		if (variant === 'outlined') {
-			return {
-				button: {
-					borderWidth: 1,
-					borderColor: Colors.status[color || 'info'],
-					backgroundColor: 'transparent',
-				},
-				text: {
-					color: Colors.status[color || 'info'],
-				},
-			};
-		}
+	const buttonStyles = [
+		styles.base,
+		variant && variantStyles[variant],
+		size ? sizeStyles[size] : sizeStyles.medium,
+	];
 
-		return {
-			button: {
-				backgroundColor: Colors.status[color || 'info'],
-			},
-			text: {
-				color: Colors.background.darker,
-			},
-		};
-	};
-
-	// * variables
-	const { button, text } = getButtonStyles(variant, color);
+	const textStyles = [
+		variant
+			? variant === 'outlined'
+				? variantStyles.outlinedText
+				: variantStyles.containedText
+			: undefined,
+	];
 
 	return (
-		<Pressable
-			{...rest}
-			style={[
-				buttonStyles.base,
-				variant && variantStyles[variant],
-				size ? sizeStyles[size] : sizeStyles.medium,
-				color && button,
-				fullWidth && { width: '100%' },
-			]}
-		>
-			<HealthyWalletText
-				style={[variant && variantStyles[`${variant}Text`], color && text]}
-			>
-				{title}
-			</HealthyWalletText>
+		<Pressable {...rest} style={buttonStyles}>
+			<HealthyWalletText style={[textStyles]}>{title}</HealthyWalletText>
 		</Pressable>
 	);
 };
-
-const buttonStyles = StyleSheet.create({
-	base: {
-		borderRadius: 8,
-		justifyContent: 'center',
-		alignItems: 'center',
-		paddingVertical: 10,
-		paddingHorizontal: 16,
-	},
-});
-
-const variantStyles = StyleSheet.create({
-	contained: {
-		backgroundColor: Colors.primary.light,
-	},
-	outlined: {
-		borderWidth: 1,
-		borderColor: Colors.primary.light,
-		backgroundColor: 'transparent',
-	},
-	containedText: {
-		color: Colors.background.darker,
-		fontWeight: 'bold',
-	},
-	outlinedText: {
-		color: Colors.primary.light,
-	},
-});
-
-const sizeStyles = StyleSheet.create({
-	small: {
-		paddingVertical: 6,
-		paddingHorizontal: 12,
-	},
-	medium: {
-		paddingVertical: 10,
-		paddingHorizontal: 16,
-	},
-	large: {
-		paddingVertical: 14,
-		paddingHorizontal: 20,
-	},
-});
 
 export default HealthyWalletButton;
