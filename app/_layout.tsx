@@ -17,36 +17,36 @@ import { HealthyWalletDarkTheme } from '@/constants/theme/dark';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync()
-  .then((value: boolean) => console.log(value))
-  .catch(error => console.error(error));
+	.then((value: boolean) => console.log(value))
+	.catch((error) => console.error(error));
 
 const RootLayout = () => {
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
+	const [loaded] = useFonts({
+		SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+	});
 
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync()
-        .then((value: boolean) => console.log(value))
-        .catch(error => console.error(error));
-    }
-  }, [loaded]);
+	useEffect(() => {
+		if (loaded) {
+			SplashScreen.hideAsync()
+				.then((value: boolean) => console.log(value))
+				.catch((error) => console.error(error));
+		}
+	}, [loaded]);
 
-  if (!loaded) return null;
+	if (!loaded) return null;
 
-  return (
-    <HealthyWalletProvider>
-      <AuthGuard>
-        <ThemeProvider value={HealthyWalletDarkTheme}>
-          <Stack>
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }}/>
-            <Stack.Screen name="+not-found"/>
-          </Stack>
-        </ThemeProvider>
-      </AuthGuard>
-    </HealthyWalletProvider>
-  );
+	return (
+		<HealthyWalletProvider>
+			<AuthGuard>
+				<ThemeProvider value={HealthyWalletDarkTheme}>
+					<Stack screenOptions={{ headerShown: false }}>
+						<Stack.Screen name='(tabs)' />
+						<Stack.Screen name='+not-found' />
+					</Stack>
+				</ThemeProvider>
+			</AuthGuard>
+		</HealthyWalletProvider>
+	);
 };
 
 export default RootLayout;

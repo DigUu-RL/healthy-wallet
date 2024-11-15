@@ -1,13 +1,13 @@
 // ** REACT
 import { Pressable, PressableProps } from 'react-native';
 
-// ** CONSTANTS
 // ** TYPES
 import { TColor, TSize, TVariant } from '@/types/colors';
 
-// ** COMPONENTS
-import HealthyWalletText from '@/components/HealthyWalletText';
+// ** STYLES
 import {
+	containedColor,
+	outlinedColor,
 	size as sizeStyles,
 	styles,
 	variant as variantStyles,
@@ -21,7 +21,7 @@ export interface IHealthyWalletButtonProps extends PressableProps {
 	size?: TSize;
 }
 
-const HealthyWalletButton = ({
+const Button = ({
 	title,
 	fullWidth,
 	variant,
@@ -33,21 +33,15 @@ const HealthyWalletButton = ({
 		styles.base,
 		variant && variantStyles[variant],
 		size ? sizeStyles[size] : sizeStyles.medium,
-	];
-
-	const textStyles = [
-		variant
-			? variant === 'outlined'
-				? variantStyles.outlinedText
-				: variantStyles.containedText
-			: undefined,
+		color &&
+			(variant === 'outlined' ? outlinedColor[color] : containedColor[color]),
 	];
 
 	return (
 		<Pressable {...rest} style={buttonStyles}>
-			<HealthyWalletText style={[textStyles]}>{title}</HealthyWalletText>
+			{title}
 		</Pressable>
 	);
 };
 
-export default HealthyWalletButton;
+export default Button;

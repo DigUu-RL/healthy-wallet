@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
 		display: 'flex',
 		flexDirection: 'row',
 		justifyContent: 'flex-end',
+		marginTop: 15,
 	},
 	item: {
 		marginRight: 5,

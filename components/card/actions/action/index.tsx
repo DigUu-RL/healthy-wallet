@@ -1,10 +1,8 @@
 // ** COMPONENTS
-import HealthyWalletButton, {
-	IHealthyWalletButtonProps,
-} from '@/components/HealthyWalletButton';
+import Button, { IHealthyWalletButtonProps } from '@/components/Button';
 
 const CardAction = ({ title, ...rest }: IHealthyWalletButtonProps) => {
-	return <HealthyWalletButton title={title} {...rest} />;
+	return <Button title={title} {...rest} />;
 };
 
 export default CardAction;
