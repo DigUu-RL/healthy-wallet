@@ -1,5 +1,9 @@
 // ** REACT
-import { Pressable, PressableProps } from 'react-native';
+import {
+	Pressable,
+	PressableProps,
+	PressableStateCallbackType,
+} from 'react-native';
 
 // ** TYPES
 import { TColor, TSize, TVariant } from '@/types/colors';
@@ -29,16 +33,19 @@ const Button = ({
 	size,
 	...rest
 }: IHealthyWalletButtonProps) => {
-	const buttonStyles = [
-		styles.base,
-		variant && variantStyles[variant],
-		size ? sizeStyles[size] : sizeStyles.medium,
-		color &&
-			(variant === 'outlined' ? outlinedColor[color] : containedColor[color]),
-	];
+	const getStyle = ({ pressed }: PressableStateCallbackType) => {
+		return [
+			styles.base,
+			variant && variantStyles[variant],
+			size ? sizeStyles[size] : sizeStyles.medium,
+			color &&
+				(variant === 'outlined' ? outlinedColor[color] : containedColor[color]),
+			pressed && styles.pressed,
+		];
+	};
 
 	return (
-		<Pressable {...rest} style={buttonStyles}>
+		<Pressable {...rest} style={({ pressed }) => getStyle({ pressed })}>
 			{title}
 		</Pressable>
 	);

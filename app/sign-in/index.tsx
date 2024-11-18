@@ -15,29 +15,30 @@ import Text from '@/components/Text';
 import Input from '@/components/Input';
 import Loading from '@/components/Loading';
 import { showToast } from '@/components/Toast';
+import { TError } from '@/types';
 
 const SignIn = () => {
 	// * hooks
-	const { login }: TAuthContext = useContext(AuthContext);
+	const { signIn }: TAuthContext = useContext(AuthContext);
 
 	// * states
 	const [loading, setLoading] = useState<boolean>(false);
-	const [loginValue, setLoginValue] = useState<string>('');
-	const [passwordValue, setPasswordValue] = useState<string>('');
+	const [login, setLogin] = useState<string>('');
+	const [password, setPassword] = useState<string>('');
 
 	// * handles
 	const onLogin = (): void => {
 		setLoading(true);
 
-		login({
-			login: loginValue,
-			password: passwordValue,
+		signIn({
+			login,
+			password,
 		})
-			.catch((error) =>
+			.catch((error: TError) =>
 				showToast({
 					type: 'error',
-					title: 'Ocorreu um erro ao realizar o login',
-					message: error.message,
+					title: error.error,
+					message: error.innerError ?? 'Ocorreu um erro ao realizar o login',
 				}),
 			)
 			.finally(() => setLoading(false));
@@ -53,11 +54,13 @@ const SignIn = () => {
 				<Divider />
 
 				<Card.Content>
-					<Input label='Login' onChangeText={setLoginValue} />
-					<Input label='Password' onChangeText={setPasswordValue} />
+					<Input label='Login' onChangeText={setLogin} />
+					<Input label='Password' onChangeText={setPassword} />
 				</Card.Content>
 
 				<Card.Actions>
+					<Card.Action title='Sign up now!' />
+
 					<Card.Action
 						fullWidth
 						title='Sign in'

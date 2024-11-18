@@ -11,6 +11,11 @@ export const styles = StyleSheet.create({
 		alignItems: 'center',
 		fontFamily: 'System',
 		fontSize: 16,
+		color: Colors.highlight.fuchsia,
+	},
+	pressed: {
+		opacity: 0.8,
+		transform: [{ scale: 0.98 }],
 	},
 });
 
