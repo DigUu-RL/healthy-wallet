@@ -11,12 +11,13 @@ import { TextInput, TextInputProps, View } from 'react-native';
 
 // ** STYlES
 import { styles } from '@/styles/input';
+import { styles as textStyles } from '@/styles/text';
 
 // ** COMPONENTS
 import Text from '@/components/Text';
-import { styles as textStyles } from '@/styles/text';
 
 interface IInputProps extends TextInputProps {
+	required?: boolean;
 	label?: string;
 }
 
@@ -26,6 +27,7 @@ const Input: ForwardRefExoticComponent<IInputProps & RefAttributes<TextInput>> =
 			{ label, ...rest }: IInputProps,
 			ref: ForwardedRef<TextInput>,
 		): ReactElement => {
+			// * states
 			const [isFocused, setIsFocused] = useState<boolean>(false);
 
 			return (

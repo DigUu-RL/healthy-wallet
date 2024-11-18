@@ -7,7 +7,7 @@ import { Colors } from '@/constants/colors';
 export const styles = StyleSheet.create({
 	base: {
 		letterSpacing: 0.25,
-		color: Colors.primary.lighter,
+		color: Colors.highlight.fuchsia,
 		fontFamily: 'System',
 		fontWeight: '500',
 	},

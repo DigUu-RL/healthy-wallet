@@ -14,6 +14,7 @@ import { AuthGuard } from '@/guards/auth-guard';
 
 // ** TYPES
 import { HealthyWalletDarkTheme } from '@/constants/theme/dark';
+import Toast from '@/components/Toast';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync()
@@ -45,6 +46,8 @@ const RootLayout = () => {
 					</Stack>
 				</ThemeProvider>
 			</AuthGuard>
+
+			<Toast />
 		</HealthyWalletProvider>
 	);
 };
